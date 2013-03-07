@@ -33,10 +33,6 @@ namespace TCPClient
                 rspData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 rspIP = rspData.Substring(rspData.IndexOf("\r") - 9, 9);
                 Console.WriteLine("Received: {0}", rspData);
-                /*Stream str = myClient.GetStream();
-                StreamReader str_read = new StreamReader(str);
-                StreamWriter str_write = new StreamWriter(str);
-                Console.WriteLine(str_read.ReadLine());*/
                 strm.Close();
                 myClient.Close();
             } 
