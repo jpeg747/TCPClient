@@ -41,27 +41,32 @@ namespace TCPClient
                 Console.WriteLine("SocketExecption: {0}", e);
             }
 
-            msg = "GET 1\r\n";
-
-            try
+            for (int i = 0; i < 3; i++)
             {
-                TcpClient myClient = new TcpClient(rspIP, QuotePort);
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(msg);
-                NetworkStream strm = myClient.GetStream();
-                strm.Write(data, 0, data.Length);
-                Console.WriteLine("Sent: {0}", msg);
+                Random rand = new Random();
+                msg = "GET " + rand.Next(1,20) + "\r\n";
 
-                data = new Byte[256];
-                String rspData = String.Empty;
-                Int32 bytes = strm.Read(data, 0, data.Length);
-                rspData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: {0}", rspData);
-                strm.Close();
-                myClient.Close();
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine("SocketExecption: {0}", e);
+
+                try
+                {
+                    TcpClient myClient = new TcpClient(rspIP, QuotePort);
+                    Byte[] data = System.Text.Encoding.ASCII.GetBytes(msg);
+                    NetworkStream strm = myClient.GetStream();
+                    strm.Write(data, 0, data.Length);
+                    Console.WriteLine("Sent: {0}", msg);
+
+                    data = new Byte[256];
+                    String rspData = String.Empty;
+                    Int32 bytes = strm.Read(data, 0, data.Length);
+                    rspData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Console.WriteLine("Received: {0}", rspData);
+                    strm.Close();
+                    myClient.Close();
+                }
+                catch (SocketException e)
+                {
+                    Console.WriteLine("SocketExecption: {0}", e);
+                }
             }
 
             }
