@@ -53,10 +53,14 @@ namespace TCPClient
                     strm.Write(data, 0, data.Length);
                     Console.WriteLine("Sent: {0}", msg);
 
-                    data = new Byte[2048];
+                    data = new Byte[5];
                     String rspData = String.Empty;
-                    Int32 bytes = strm.Read(data, 0, data.Length);
-                    rspData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    Int32 bytes;
+                    while ((bytes = strm.Read(data, -1, data.Length)) != 0)
+                    {
+                        rspData += System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    }
+                    
                     Console.WriteLine("Received: {0} {1}", "(From: "+rspIP+", Port: "+QuotePort+")", rspData);
                     strm.Close();
                     myClient.Close();
